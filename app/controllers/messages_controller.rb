@@ -1,12 +1,28 @@
 class MessagesController < ApplicationController
+  before_action :set_message, only: [:edit, :update, :destroy]   #同じコントローラ内のset_messageというメソッドを :edit,:updateのアクションの前に実行するように設定しています。
   def index
     @message = Message.new   # @message = Message.newで、Messageモデルのオブジェクトの初期化を行い、@messageに代入を行っている。
     #Meaageを全て取得する
     @messages = Message.all
   end
+  def edit
+  end
+  def destroy
+    @message.destroy
+    redirect_to root_path, notice: 'メッセージを削除しました'
+  end
   
   #メッセージを作成する処理の流れは以下のようになっています。
   #先ほどのフォームに値を入力し送信ボタンを押すと /messagesというURLにPOSTでリクエストがパラメータと共に送信されます。その後、routes.rbで設定したMessagesControllerのcreateアクションが呼ばれます。
+  def update
+    if @message.update(message_params)
+      # 保存に成功した場合はトップページへリダイレクト
+      redirect_to root_path , notice: 'メッセージを編集しました'
+    else
+      # 保存に失敗した場合は編集画面へ戻す
+      render 'edit'
+    end
+  end
   
   def create
     @message = Message.new(message_params)
@@ -32,6 +48,9 @@ class MessagesController < ApplicationController
   end
   ## ここまで
   # ブラウザのフォームから送信されたパラメータは、コントローラ側からは params で取得できます。
+  def set_message
+    @message = Message.find(params[:id])
+  end
 end
 
   

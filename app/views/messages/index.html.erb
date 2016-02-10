@@ -7,6 +7,9 @@
     <% @messages.each do |message| %>
       <span class="label label-info"><%= message.name %></span>
       <%= message.body %>
+        (<%= link_to "edit" , edit_message_path(message) %>    <!-- #メッセージ一覧画面の右側に編集ページへのリンクを配置します。link_toの第一引数はラベルになり、
+        edit_message_path(message)の部分では、編集ページへのパスを指定しています。-->
+        <%= link_to "destroy" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' } %>)
       <br>
     <% end %>
   </div>
