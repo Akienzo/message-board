@@ -10,8 +10,14 @@ class MessagesController < ApplicationController
   
   def create
     @message = Message.new(message_params)
-    @message.save
+    if @message.save
     redirect_to root_path , notice: 'メッセージを保存しました。'
+    else
+      #メッセージが保存できなかった時は @messageのerrorsメソッドでエラーメッセージを取得することができます。
+      @message = Message.all
+      flash.now[:alert] = "メッセージの保存に失敗しました。"    #エラーメッセージをflash.now[:alert]に代入しています。
+      render 'index'
+    end
   end
   
   #nameと、bodyが含まれたパラメータ(message_params)を受け取り、 message_paramsの内容をもとにMessageモデルのインスタンスを生成(Message.new)し、変数@messageに代入しています。
