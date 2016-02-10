@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
     redirect_to root_path , notice: 'メッセージを保存しました。'
     else
       #メッセージが保存できなかった時は @messageのerrorsメソッドでエラーメッセージを取得することができます。
-      @message = Message.all
+      @messages = Message.all
       flash.now[:alert] = "メッセージの保存に失敗しました。"    #エラーメッセージをflash.now[:alert]に代入しています。
       render 'index'
     end
