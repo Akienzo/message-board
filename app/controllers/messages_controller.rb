@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
   
   private
   def message_params
-    params.require(:message).permit(:name, :body)
+    params.require(:message).permit(:name, :age, :body)
     #def message_paramsはparamsに:messageというキーが存在するか検証し、存在する場合はparams[:message]のうち、キーが:nameと:bodyの値のみ受け取るようにフィルタリングを行っています
   end
   ## ここまで
